@@ -49,7 +49,7 @@ class aparser(HTMLParser):
             
     def handle_data(self, data):
         if(self.tag_f_info == 1):
-            output.write( '\n----\n[feed]:' + data + '\n')
+            output.write( '\n------------\n[feed]:' + data + '\n')
             self.tag_f_info = 0
         if(self.tag_c_tx_qnamecard == 1):
 #            output.write('\t[person]:' + data + '\n')
@@ -84,6 +84,8 @@ fid.close()
 newlines = ''
 for line in lines:
     if line.strip() != '':
+        if line.endswith('回复\n'):
+            line = line[0:len(line) - 3] + '\n'
         newlines = newlines + line
 output2 = open(currentfilename, 'w', encoding = 'utf-8')
 output2.write(newlines)
